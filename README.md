@@ -1,6 +1,6 @@
 # Revoko
 
-![GitHub](https://img.shields.io/github/license/aewens/revoko?style=for-the-badge))]
+![GitHub](https://img.shields.io/github/license/aewens/revoko?style=for-the-badge)
 
 ## Overview
 A self-hosted service used to store and recall personal data. The name comes from Esperanto for the word "recall", given its intended functionality. The project has a strong focus on modularity to allow for various components to be easily swapped out later on, and as such needs a way to orchestrate and compose its various components together to create a cohesive and unified application. That is the purpose that this specific repository serves in the project as it will facilitate:
