@@ -1,9 +1,16 @@
 {
+    "_components": [
+        "server": "https://github.com/aewens/revoko-server",
+        "web": "https://github.com/aewens/revoko-web"
+    ],
+    "_shared": {
+        "api": "https://domain.tld/api",
+        "database": {
+            "user": "admin",
+            "password": "supersecretpassword"
+        }
+    },
     "server": {
         "port": 3030
-    },
-    "database": {
-        "user": "admin",
-        "password": "supersecretpassword"
     }
 }
