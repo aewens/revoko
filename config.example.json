@@ -1,8 +1,8 @@
 {
-    "_components": [
+    "_components": {
         "server": "https://github.com/aewens/revoko-server",
         "web": "https://github.com/aewens/revoko-web"
-    ],
+    },
     "_shared": {
         "api": "https://domain.tld/api",
         "database": {
