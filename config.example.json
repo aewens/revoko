@@ -1,0 +1,9 @@
+{
+    "server": {
+        "port": 3030
+    },
+    "database": {
+        "user": "admin",
+        "password": "supersecretpassword"
+    }
+}

@@ -1,11 +1,12 @@
 # Application specific
-
-NOTES
-test.py
-prelude.py
 *.vim
 *.swp
 *.swo
+NOTES
+test.py
+prelude.py
+config.json
+
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
