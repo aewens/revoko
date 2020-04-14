@@ -4,13 +4,13 @@
         "web": "https://github.com/aewens/revoko-web"
     },
     "_shared": {
-        "api": "https://domain.tld/api",
+        "api": "https://domain.tld/api"
+    },
+    "server": {
+        "port": 3030,
         "database": {
             "user": "admin",
             "password": "supersecretpassword"
         }
-    },
-    "server": {
-        "port": 3030
     }
 }
