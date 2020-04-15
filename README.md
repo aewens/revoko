@@ -18,3 +18,36 @@ The goal for accomplishing those features is to provide a plugin system for the 
 1. When the stopping the daemon(s) it will run any cleanup scripts provided by the components after sending SIGTERM to their process(es) 
 
 Since the components can have more than one script to run, for multiple scripts by convention using a number to prefix the script name (e.g. 00_initialize.sh) will ensure they all execute in the expected order. The shared configuration file will dictate the order the components are run in case any need to be run before or after another component to work properly.
+
+## Install
+
+### Prerequisites
+
+Required:
+- Python 3.6+
+
+Optional:
+- pytest
+
+### Install & Setup
+
+```bash
+# Obtain the source code
+$ git clone https://github.com/aewens/revoko
+$ cd revoko
+
+# Fill out the config file
+$ cp config{.example,}.json
+$ $EDITOR config.json
+
+# Setup the virtual environment
+$ python3 -m venv .venv --prompt revoko
+$ .venv/bin/python3 -m pip install -U pip
+$ .venv/bin/python3 -m pip install -r requirements.txt
+
+# Verify that all tests pass (optional)
+$ .venv/bin/pytest
+
+# Start the daemon
+$ .venv/bin/python3 daemon.py -c config.json
+```
