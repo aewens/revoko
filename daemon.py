@@ -12,5 +12,13 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--timeout", dest="timeout", nargs="?", type=int,
         default=3 * 60)
 
+    parser.add_argument("-S", "--no-scripts", dest="no_scripts",
+        action="store_true")
+
+    parser.add_argument("-U", "--no-updates", dest="no_updates",
+        action="store_true")
+
     args = parser.parse_args()
-    entry(args.config)
+    # DEBUG
+    #print(vars(args))
+    entry(args)

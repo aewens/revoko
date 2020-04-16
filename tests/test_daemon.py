@@ -3,7 +3,7 @@ from .context import daemon
 from pathlib import Path
 from argparse import Namespace
 
-args = Namespace(timeout=3 * 60)
+args = Namespace(timeout=3 * 60, no_scripts=False, no_updates=False)
 
 def test_eprint():
     assert daemon.eprint("Hello, world!") is None, "eprint returned something"

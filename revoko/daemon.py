@@ -95,10 +95,10 @@ def load_components(config, args):
             continue
 
         # Create temporary file to pass custom settings to components
-        config_file = NamedTemporaryFile(delete=False, suffix=".json")
-        config_name = config_file.name
-        config_file.write(config_data.encode())
-        config_file.close()
+        config_temp = NamedTemporaryFile(delete=False, suffix=".json")
+        config_file = config_temp.name
+        config_temp.write(config_data.encode())
+        config_temp.close()
 
         component_dir = f"components/{component_name}"
         component_path = Path(component_dir)
@@ -110,28 +110,33 @@ def load_components(config, args):
                 eprint(clone_result.stderr)
                 continue
 
-        else:
+        elif not args.no_updates:
             # Merge updates from the repo if they exist
-            merge_result = shell_run("git pull --no-edit --commit -X theirs")
+            merge_flags = "--no-edit --commit -X theirs"
+            merge_result = shell_run(f"git pull origin master {merge_flags}")
             if merge_result.returncode != 0:
                 eprint(merge_result.stderr)
                 continue
 
-        # Run all of the component scripts in sorted order 
-        component_scripts = component_path / "scripts"
-        for component_script in sorted(component_scripts.glob("*")):
-            script_name = str(component_script)
-            log_file = str(Path(f"{component_dir}.log").absolute())
-            pid_file = str(Path(f"{component_dir}.pid").absolute())
-            shell_command = f"{script_name} {config_name} {log_file} {pid_file}"
-            script_result = shell_run(shell_command, timeout=args.timeout)
-            if script_result.returncode != 0:
-                eprint(script_result.stderr)
-                continue
+        if not args.no_scripts:
+            # Run all of the component scripts in sorted order 
+            component_scripts = component_path / "scripts"
+            for component_script in sorted(component_scripts.glob("*")):
+                script_name = str(component_script)
+                log_file = str(Path(f"{component_dir}.log").absolute())
+                pid_file = str(Path(f"{component_dir}.pid").absolute())
+                shell_arguments = " ".join([config_file, log_file, pid_file])
+                shell_command = f"{script_name} {shell_arguments}"
+                # Pass config, log, and PID file to scripts as arguments
+                script_result = shell_run(shell_command, timeout=args.timeout)
+                if script_result.returncode != 0:
+                    eprint(script_result.stderr)
+                    continue
 
     return components
 
 def entry(args):
-    config = load_config(args.config_file)
+    config = load_config(args.config)
     components = load_components(config, args)
+    # DEBUG
     #pprint(components)
