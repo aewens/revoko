@@ -1,6 +1,9 @@
 from .context import daemon
 
 from pathlib import Path
+from argparse import Namespace
+
+args = Namespace(timeout=3 * 60)
 
 def test_eprint():
     assert daemon.eprint("Hello, world!") is None, "eprint returned something"
@@ -32,7 +35,7 @@ def test_load_components():
     config = daemon.load_config(config_file, test=True)
     config_file.close()
 
-    components = daemon.load_components(config)
+    components = daemon.load_components(config, args)
     for component_name in config.get("_components", dict()).keys():
         component_missing = f"{component_name} is missing"
         assert components.get(component_name) is not None, component_missing
