@@ -17,6 +17,10 @@ def test_shell_run_fail():
     assert hasattr(result, "returncode"), "shell_run has no return code"
     assert result.returncode != 0, "Command passed when it should fail"
 
+def test_shell_run_timeout():
+    result = daemon.shell_run("sleep 2", 1)
+    assert result is None, "shell_run did not timeout"
+
 def test_load_config():
     config_file = open("config.example.json")
     config = daemon.load_config(config_file, test=True)
