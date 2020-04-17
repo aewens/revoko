@@ -18,6 +18,11 @@ if __name__ == "__main__":
     parser.add_argument("-U", "--no-updates", dest="no_updates",
         action="store_true")
 
+    parser.add_argument("-k", "--kill", dest="kill", nargs="*")
+
+    parser.add_argument("-K", "--kill-all", dest="kill_all",
+        action="store_true")
+
     args = parser.parse_args()
     # DEBUG
     #print(vars(args))
