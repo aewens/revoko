@@ -91,15 +91,27 @@ def load_component(args, component_path, component_uri):
     return True
 
 def run_component_scripts(args, component_path, config_data):
+    prefix = "revoko_"
+    suffix = ".json"
+    tmp_glob = f"{prefix}*{suffix}"
+
+    # Clear out previous temporary config file
+    for tmp in component_path.glob(tmp_glob):
+        tmp.unlink()
+
     # Create temporary file to pass custom settings to components
-    config_temp = NamedTemporaryFile(delete=False, suffix=".json")
+    config_temp = NamedTemporaryFile(delete=False, prefix=prefix, suffix=suffix)
+
     config_file = config_temp.name
     config_temp.write(config_data.encode())
     config_temp.close()
 
     # Run all of the component scripts in sorted order 
     component_dir = str(component_path)
-    component_scripts = component_path / "scripts"
+    component_scripts = component_path / "_scripts"
+    if not component_scripts.exists():
+        return None
+
     for component_script in sorted(component_scripts.glob("*")):
         script_name = str(component_script)
         log_file = str(Path(f"{component_dir}.log").absolute())
